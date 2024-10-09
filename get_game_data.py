@@ -74,9 +74,11 @@ def compile_game_code(path):
 
 def run_command(command, path):
     cwd = os.getcwd()
+    print(path)
     os.chdir(path)
 
-    result = run(command, stdout=PIPE, stdin=PIPE, universal_newlines=True)
+
+    result = run(command, stdout=PIPE, stderr=PIPE, text=True, shell=True)
     print("compile result", result)
 
     os.chdir(cwd)
@@ -93,6 +95,7 @@ def main(source, target):
 
     for src, dest in zip(game_paths, new_game_dirs):
         dest_path = os.path.join(target_path, dest)
+        print("dest_path ",dest_path)
         copy_and_overwrite(src, dest_path)
         compile_game_code(dest_path)
 
